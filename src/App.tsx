@@ -1,13 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [message, setMessage] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  useEffect(() => {
+    const fetchMessage = async () => {
+      try {
+        const response = await axios.get('https://your-backend.vercel.app/api/hello');
+        setMessage(response.data.message);
+      } catch (err: any) {
+        setError(err.message || 'Error fetching message');
+      }
+    };
+
+    fetchMessage();
+  }, []);
 
   return (
     <>
+      <div className="p-4">
+        <h1>Frontend Test</h1>
+        {message && <p>Backend says: {message}</p>}
+        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      </div>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
