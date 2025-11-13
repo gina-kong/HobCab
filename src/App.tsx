@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     const fetchMessage = async () => {
       try {
-        const response = await axios.get('https://your-backend.vercel.app/api/hello');
+        const response = await axios.get('https://hobcab-backend.vercel.app');
         setMessage(response.data.message);
       } catch (err: any) {
         setError(err.message || 'Error fetching message');
